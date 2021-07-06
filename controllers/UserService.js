@@ -1,16 +1,15 @@
 const User = require('../models/UserDAO');
 const bcrypt = require('bcrypt');
 const getUserId = (req,res) => {
-    console.log(req.body.correo);
     console.log(req.query.correo);
      User.findAll({
         where: {
-            correo: req.params.correo,
+            correo: req.query.correo,
         },
     }).then((data) => {
        if(data.length> 0) {
 
-           let result = bcrypt.compareSync(req.params.pass,data[0].pass);
+           let result = bcrypt.compareSync(req.query.pass,data[0].pass);
 
            if(result){
                 res.send(data);
