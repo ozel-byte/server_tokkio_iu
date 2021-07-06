@@ -1,7 +1,8 @@
 const User = require('../models/UserDAO');
 const bcrypt = require('bcrypt');
 const getUserId = (req,res) => {
-    console.log(req.params.correo)
+    console.log(req.body.correo);
+    console.log(req.query.correo);
      User.findAll({
         where: {
             correo: req.params.correo,
