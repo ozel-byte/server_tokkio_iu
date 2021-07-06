@@ -5,16 +5,17 @@ const server = http.createServer(app);
 const sequelize = require("./DATABASE/db");
 const {Server} = require("socket.io");
 const userRouter = require('./routes/UserRoutes');
-const io = require('socket.io')(server);
+const io = new Server(server);
 var bodyParser = require('body-parser')
 const cors = require('cors');
 let  mapArreglo = new Map();
 
 
-app.use(cors())
+app.use(cors());
 
 
 io.on('connection', socket => {
+
     console.log("Nueva conexion user"+ socket.id + " "+socket.data);
 
     mapArreglo.set(socket.id , socket.data);
