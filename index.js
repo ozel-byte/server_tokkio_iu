@@ -5,7 +5,9 @@ const server = http.createServer(app);
 const sequelize = require("./DATABASE/db");
 const {Server} = require("socket.io");
 const userRouter = require('./routes/UserRoutes');
-const io = new Server(server);
+const io = require('socket.io')(server, {
+    cors:  {origin: "*"}
+});
 var bodyParser = require('body-parser')
 
 let  mapArreglo = new Map();
