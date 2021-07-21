@@ -51,12 +51,23 @@ const addUser = (req,res) => {
     })
 }
 
-const validationUsername = (req,res) => {
-    User.findAll({
+const validationUsername = async (req,res) => {
+   let response = await User.findAll({
         where: {
             username: req.query.username
         }
-    })
+    });
+    if(response.length>0){
+        res.send({
+            find:"false",
+            body:"username ocupado"
+        })
+    }else{
+        res.send({
+            find:"true",
+            body:"username disponible"
+        })
+    }
 }
 const validationCorreo = async (req,res)  =>  {
   let response = await  User.findAll({
@@ -65,9 +76,15 @@ const validationCorreo = async (req,res)  =>  {
         }
     });
     if(response.length > 0){
-        res.send("correo ya existe");
+        res.send({
+            status: false,
+            body:"correo ocupado"
+        });
     }else{
-        res.send("no existe")
+        res.send({
+            status:true,
+            body:"correo disponible"
+        })
     }
 }
 
@@ -76,5 +93,6 @@ module.exports = {
     getUserId,
     addUser,
     getUserUsername,
-    validationCorreo
+    validationCorreo,
+    validationUsername
 };

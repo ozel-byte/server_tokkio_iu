@@ -10,7 +10,7 @@ class Sockets{
     socketEvents(){
         console.log("llego socket");
         this.io.on('connection', socket => {
-            console.log("user conect :"+ socket.id)
+         
             socket.on('message', (data) => {
                this.mapArreglo.push({
                    idUser: socket.id,
@@ -19,7 +19,7 @@ class Sockets{
                });
             
                this.io.emit('emitir',this.mapArreglo);
-               console.log(this.mapArreglo)
+             
             });
             socket.on('disconnect',() => {
                 console.log("user desconectado" + socket.id);
@@ -28,7 +28,7 @@ class Sockets{
                    if(element.idUser === socket.id){
                        this.mapArreglo.splice(index,1);
                       this.io.emit('emitir',this.mapArreglo);
-                      console.log(this.mapArreglo)
+                   
                        break;
                    }
                }
