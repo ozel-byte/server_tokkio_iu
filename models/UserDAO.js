@@ -7,13 +7,15 @@ class User extends Model{}
 
 User.init({
     idUser: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
         primaryKey: true
     },
     username: DataTypes.STRING,
     correo: DataTypes.STRING,
-    pass: DataTypes.STRING
+    pass: DataTypes.STRING,
+    imgPerfil: DataTypes.STRING
 },
 {
     sequelize,

@@ -1,5 +1,6 @@
 const User = require('../models/UserDAO');
 const bcrypt = require('bcrypt');
+
 const getUserId = (req,res) => {
     console.log(req.query.correo);
      User.findAll({
@@ -23,15 +24,13 @@ const getUserId = (req,res) => {
 }
 
 const addUser = (req,res) => {
-    console.log("holaaa")
-    console.log(req.body.pass);
-    console.log(req.body.username);
+    console.log(req.body.pass)
     const passwordCifrado = bcrypt.hashSync(req.body.pass,10);
-
     User.create({
         username: req.body.username,
         correo: req.body.correo,
-        pass: passwordCifrado
+        pass: passwordCifrado,
+        imgPerfil: req.body.imgPerfil
     }).then(() => {
         res.send("usuario se creo correctamente")
     }).catch(e => {
