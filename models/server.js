@@ -37,20 +37,24 @@ class Server {
         })
     }
     
-    initDB() {
-        sequelize.sync({ force: false }).then(() => {
-            console.log("conexion")
-        }).catch(e => console.log("no se realizo la conexion"))
+   initDB() {
+   sequelize.authenticate().then(() => {
+       console.log("DATABASE conected");
+   }).catch(e => {
+       console.log("no se pudo establecer una conexion")
+   })
     }
 
 
     execute() {
+       
         this.initRoutes()
         this.initSocket();
         this.initDB()
         this.server.listen(this.port, () => {
             console.log("Server en el puerto ", this.port);
-        })
+        });
+        
     }
 }
 
