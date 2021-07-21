@@ -10,6 +10,7 @@ const sequelize = new Sequelize(
     {
         host: database.host_server,
         dialect: 'mysql',
+        logging:false,
         define : {
             timestamps: false
         }

@@ -2,7 +2,7 @@ const User = require('../models/UserDAO');
 const bcrypt = require('bcrypt');
 
 const getUserId = (req,res) => {
-    console.log(req.query.correo);
+   
      User.findAll({
         where: {
             correo: req.query.correo,
@@ -23,6 +23,19 @@ const getUserId = (req,res) => {
     })
 }
 
+
+const getUserUsername = (req,res) => {
+    User.findAll({
+        where: {
+            username: req.query.username
+        }
+    }).then(data => {
+        res.send(data)
+    }).catch(e => {
+        res.send("error")
+    })
+}
+
 const addUser = (req,res) => {
     console.log(req.body.pass)
     const passwordCifrado = bcrypt.hashSync(req.body.pass,10);
@@ -38,8 +51,30 @@ const addUser = (req,res) => {
     })
 }
 
+const validationUsername = (req,res) => {
+    User.findAll({
+        where: {
+            username: req.query.username
+        }
+    })
+}
+const validationCorreo = async (req,res)  =>  {
+  let response = await  User.findAll({
+        where: {
+            correo: req.query.correo
+        }
+    });
+    if(response.length > 0){
+        res.send("correo ya existe");
+    }else{
+        res.send("no existe")
+    }
+}
+
 
 module.exports = {
     getUserId,
-    addUser
+    addUser,
+    getUserUsername,
+    validationCorreo
 };
