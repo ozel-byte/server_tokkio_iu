@@ -77,12 +77,12 @@ const validationCorreo = async (req,res)  =>  {
     });
     if(response.length > 0){
         res.send({
-            status: false,
+            find: "false",
             body:"correo ocupado"
         });
     }else{
         res.send({
-            status:true,
+            find:"true",
             body:"correo disponible"
         })
     }
