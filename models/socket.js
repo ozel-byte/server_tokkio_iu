@@ -10,7 +10,7 @@ class Sockets{
     socketEvents(){
         console.log("llego socket");
         this.io.on('connection', socket => {
-            socket.emit("enviar-id", socket.id)
+            socket.emit("enviar-id", socket.id);
             socket.on('message', (data) => {
 
                this.mapArreglo.push({
@@ -18,9 +18,9 @@ class Sockets{
                    user: data.username,
                    imgUser: data.imgUser
                });
-               
+               socket.broadcast.emit("emitir",this.mapArreglo);
                this.io.emit('emitir',this.mapArreglo);
-             
+               
             });
             socket.on("notificacion-user", (data) => {
               this.io.to(data.idReceptor).emit("notificacion", data)
