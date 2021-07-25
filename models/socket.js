@@ -10,7 +10,7 @@ class Sockets{
     socketEvents(){
         console.log("llego socket");
         this.io.on('connection', socket => {
-            console.log(socket.id);
+            socket.emit("enviar-id", socket.id)
             socket.on('message', (data) => {
 
                this.mapArreglo.push({
@@ -23,7 +23,10 @@ class Sockets{
              
             });
             socket.on("notificacion-user", (data) => {
-              this.io.to(data.idUser).emit("notificacion", "el user te invito")
+              this.io.to(data.idReceptor).emit("notificacion", data)
+            })
+            socket.on("aceptar-invitacion", (data) => {
+                this.io.to(data.id).emit("invitacion-acpetada", data)
             })
             socket.on('disconnect',() => {
                 console.log("user desconectado" + socket.id);
