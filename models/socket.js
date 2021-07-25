@@ -10,17 +10,21 @@ class Sockets{
     socketEvents(){
         console.log("llego socket");
         this.io.on('connection', socket => {
-            console.log(socket.id)
+            console.log(socket.id);
             socket.on('message', (data) => {
+
                this.mapArreglo.push({
                    idUser: socket.id,
                    user: data.username,
                    imgUser: data.imgUser
                });
-            
+               
                this.io.emit('emitir',this.mapArreglo);
              
             });
+            socket.on("notificacion-user", (data) => {
+              this.io.to(data.idUser).emit("notificacion", "el user te invito")
+            })
             socket.on('disconnect',() => {
                 console.log("user desconectado" + socket.id);
                for (let index = 0; index < this.mapArreglo.length; index++) {
