@@ -13,13 +13,22 @@ const getUserId = (req,res) => {
            let result = bcrypt.compareSync(req.query.pass,data[0].pass);
 
            if(result){
-                res.send(data);
+                res.send({
+                    find: "true",
+                    body: data
+                });
            }else{
-                res.send("el password no coinside");
+                res.send({
+                    find: "false",
+                    message: "no coinciden las credenciales"
+                });
            }
        }
     }).catch(e => {
-        res.send("no existe correo")
+        res.send({
+            find: "false",
+            message: "no coinciden las credenciales"
+        })
     })
 }
 
@@ -37,7 +46,7 @@ const getUserUsername = (req,res) => {
 }
 
 const addUser = (req,res) => {
-    console.log(req.body.pass)
+  
     const passwordCifrado = bcrypt.hashSync(req.body.pass,10);
     User.create({
         username: req.body.username,
