@@ -31,6 +31,9 @@ class Sockets{
             socket.on("send-image-user-conected-room", data => {
                 this.io.to(data.id).emit("send-image-user-conected-room-catch",data)
             })
+            socket.on("enviandoParametros", (data) => {
+                this.io.to(data.id).emit("recibeParametros", data)
+            })
             socket.on('disconnect',() => {
                 console.log("user desconectado" + socket.id);
                for (let index = 0; index < this.mapArreglo.length; index++) {
