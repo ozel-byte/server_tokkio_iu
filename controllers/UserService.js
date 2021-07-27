@@ -1,35 +1,34 @@
 const User = require('../models/UserDAO');
 const bcrypt = require('bcrypt');
 
-const getUserId = (req,res) => {
+const getUserId = async (req,res) => {
    
-     User.findAll({
+   let response = await User.findAll({
         where: {
             correo: req.query.correo,
         },
-    }).then((data) => {
-       if(data.length> 0) {
 
-           let result = bcrypt.compareSync(req.query.pass,data[0].pass);
-
-           if(result){
-                res.send({
-                    find: "true",
-                    body: data
-                });
-           }else{
-                res.send({
-                    find: "false",
-                    message: "no coinciden las credenciales"
-                });
-           }
-       }
-    }).catch(e => {
+    })
+    if(response.length > 0){
+        let result = bcrypt.compareSync(req.query.pass,response[0].pass);
+        if(result){
+             res.send({
+                 find: "true",
+                 body: response
+             });
+        }else{
+             res.send({
+                 find: "false",
+                 message: "no coinciden las credenciales"
+             });
+        }
+    }else{
         res.send({
             find: "false",
-            message: "no coinciden las credenciales"
+            message: "no existe ningun correo o password"
         })
-    })
+    }
+
 }
 
 

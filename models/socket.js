@@ -10,6 +10,7 @@ class Sockets{
     socketEvents(){
         console.log("llego socket");
         this.io.on('connection', socket => {
+            console.log(socket.id);
             socket.emit("enviar-id", socket.id);
             socket.on('message', (data) => {
 
