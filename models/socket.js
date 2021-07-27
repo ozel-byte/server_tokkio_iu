@@ -36,9 +36,7 @@ class Sockets{
                 this.io.to(data.id).emit("recibeParametros", data)
             })
 
-            socket.on("moveponteruser", (data) => {
-                this.io.to(data.id).emit("movepointerUser",data)
-            })
+            
             socket.on('disconnect',() => {
                 console.log("user desconectado" + socket.id);
                for (let index = 0; index < this.mapArreglo.length; index++) {
