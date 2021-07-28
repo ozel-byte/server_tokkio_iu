@@ -61,9 +61,15 @@ const addUser = async (req,res) => {
     });
 
     if(response){
-        res.send("usuario se creo correctamente");
+        res.send({
+            find: "true",
+            message: "usuario se creo correctamente"
+        });
     }else{
-        res.send("no se pudo crear el usuario");
+        res.send({
+            find: "false",
+            message: "no se pudo crear el usuario"
+        });
     }
 }
 
