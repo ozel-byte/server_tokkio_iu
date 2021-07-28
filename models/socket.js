@@ -23,16 +23,21 @@ class Sockets{
                this.io.emit('emitir',this.mapArreglo);
                
             });
+
             socket.on("notificacion-user", (data) => {
               this.io.to(data.idReceptor).emit("notificacion", data)
             })
+
             socket.on("aceptar-invitacion", (data) => {
                 this.io.to(data.id).emit("invitacion-acpetada", data)
             })
+
             socket.on("send-image-user-conected-room", data => {
                 this.io.to(data.id).emit("send-image-user-conected-room-catch",data)
             })
+            // Recibiendo los parametrosd la imagen al usuario
             socket.on("enviandoParametros", (data) => {
+                //Enviando los parametrosd la imagen al usuario
                 this.io.to(data.id).emit("recibeParametros", data)
             })
 
