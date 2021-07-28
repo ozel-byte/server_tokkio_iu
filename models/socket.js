@@ -62,9 +62,12 @@ class Sockets{
                    const element = this.mapArreglo[index];
                    if(element.idUser === socket.id){
                        this.mapArreglo.splice(index,1);
-
+                       let dato = {
+                           idDesconectado: socket.id,
+                           arreglo: this.mapArreglo
+                       }
                        /*Evento que emite el nuevo arreglo con usuarios en linea */
-                      this.io.emit('emitir',this.mapArreglo);
+                      this.io.emit('actualizarAregloUsuario',dato);
                        break;
                    }
                }
