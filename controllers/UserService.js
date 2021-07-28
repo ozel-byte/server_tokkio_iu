@@ -1,13 +1,13 @@
 const User = require('../models/UserDAO');
 const bcrypt = require('bcrypt');
 
+
+/* metodo para validar el inicio de sesion */
 const getUserId = async (req,res) => {
-   
    let response = await User.findAll({
         where: {
             correo: req.query.correo,
         },
-
     })
     if(response.length > 0){
         let result = bcrypt.compareSync(req.query.pass,response[0].pass);
@@ -32,34 +32,44 @@ const getUserId = async (req,res) => {
 }
 
 
-const getUserUsername = (req,res) => {
-    User.findAll({
+/* metodo para obtener los datos del usuario  */
+const getUserUsername = async (req,res) => {
+
+    let response = await User.findAll({
         where: {
             username: req.query.username
         }
-    }).then(data => {
-        res.send(data)
-    }).catch(e => {
-        res.send("error")
-    })
+    });
+    if(response.length>0){
+        res.send(response);
+    }else{
+        res.send("no se pudo obtener")
+    }
 }
 
-const addUser = (req,res) => {
-  
+
+/*Metodo para agregar un nuevo usuario */
+const addUser = async (req,res) => {
+    
     const passwordCifrado = bcrypt.hashSync(req.body.pass,10);
-    User.create({
+
+  let response = await User.create({
         username: req.body.username,
         correo: req.body.correo,
         pass: passwordCifrado,
         imgPerfil: req.body.imgPerfil
-    }).then(() => {
-        res.send("usuario se creo correctamente")
-    }).catch(e => {
-        console.log("no se creo el usuario");
-    })
+    });
+
+    if(response){
+        res.send("usuario se creo correctamente");
+    }else{
+        res.send("no se pudo crear el usuario");
+    }
 }
 
+/* Metodo para validar si existe ya un usuario con ese nombre */
 const validationUsername = async (req,res) => {
+    console.log(req.query.username)
    let response = await User.findAll({
         where: {
             username: req.query.username
@@ -77,12 +87,15 @@ const validationUsername = async (req,res) => {
         })
     }
 }
+
+/* Metodo para validar si existe ya un usuario con ese correo */
 const validationCorreo = async (req,res)  =>  {
   let response = await  User.findAll({
         where: {
             correo: req.query.correo
         }
     });
+
     if(response.length > 0){
         res.send({
             find: "false",

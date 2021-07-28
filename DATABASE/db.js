@@ -1,5 +1,6 @@
 const {Sequelize} = require('sequelize');
 
+/*Configuracion de la base de datos */
 let name = process.env.NAME;
 let user = process.env.DBUSER;
 let pass = process.env.PASS;

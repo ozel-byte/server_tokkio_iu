@@ -1,11 +1,11 @@
-const { Socket } = require('dgram');
+
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const Sockets = require("./socket");
 const sequelize = require("../DATABASE/db");
 const userRouter = require('../routes/UserRoutes');
-var bodyParser = require('body-parser');
+
 const cors = require('cors');
 
 class Server {
@@ -22,11 +22,12 @@ class Server {
         this.app.use(cors());
     }
 
+    /*Metodo para inicar los sockets */
     initSocket() {
-        console.log("iniciando socket")
         new Sockets(this.io);
     }
 
+    /*Metodo que inicia las rutas */
     initRoutes() {
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(express.json());
@@ -37,17 +38,17 @@ class Server {
         })
     }
     
+    /*Metodo que incia la base de datos */
    initDB() {
    sequelize.authenticate().then(() => {
-       console.log("DATABASE conected");
+       console.log("Conexion Exitosa");
    }).catch(e => {
        console.log("no se pudo establecer una conexion")
    })
     }
 
-
+    /*Metodo para exuctar los metodos anteriores */
     execute() {
-       
         this.initRoutes()
         this.initSocket();
         this.initDB()
