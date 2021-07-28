@@ -19,7 +19,6 @@ class Sockets{
                    user: data.username,
                    imgUser: data.imgUser
                });
-               socket.broadcast.emit("emitir",this.mapArreglo);
                this.io.emit('emitir',this.mapArreglo);
                
             });
